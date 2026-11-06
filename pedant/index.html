@@ -296,6 +296,31 @@ footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
 .ba .lab{position:absolute;top:16px;z-index:6;background:rgba(44,51,39,.85);color:var(--sand);font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:100px;pointer-events:none}
 .ba .lab.l{left:16px}
 .ba .lab.r{right:16px;background:var(--yellow);color:var(--ink)}
+
+/* --- Ruumide vahekaardid --- */
+.tabs{margin-top:46px;background:var(--white);border-radius:28px;padding:28px;max-width:860px}
+.tabnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.tabnav button{font-family:var(--font);font-size:14.5px;font-weight:600;color:var(--mute);background:var(--sand);border:2px solid transparent;border-radius:100px;padding:11px 20px;cursor:pointer;transition:all .18s ease}
+.tabnav button:hover{transform:translateY(-2px)}
+.tabnav button[aria-selected="true"]{background:var(--yellow);border-color:var(--ink);color:var(--ink)}
+.tabpane{display:none;grid-template-columns:1fr 1fr;gap:12px}
+.tabpane[data-on="1"]{display:grid;animation:panein .45s cubic-bezier(.19,1,.22,1) both}
+@keyframes panein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.titem{display:flex;align-items:flex-start;gap:12px;background:var(--sand);border-radius:14px;padding:15px 17px;font-size:15.5px;line-height:1.45}
+.titem i{flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:var(--yellow);position:relative;margin-top:1px}
+.titem i::after{content:"";position:absolute;left:7px;top:4.5px;width:4px;height:9px;border:solid var(--ink);border-width:0 2.2px 2.2px 0;transform:rotate(42deg)}
+@media(max-width:700px){.tabpane[data-on="1"]{grid-template-columns:1fr}.tabs{padding:22px}}
+
+/* --- KKK --- */
+.faq{margin-top:44px;max-width:760px}
+.faq details{border-bottom:1px solid var(--line);padding:4px 0}
+.faq details:first-child{border-top:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:22px 44px 22px 0;font-size:18.5px;font-weight:600;letter-spacing:-0.02em;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";position:absolute;right:8px;top:50%;width:14px;height:2.5px;background:var(--ink);border-radius:2px;transform:translateY(-50%)}
+.faq summary::before{content:"";position:absolute;right:13.75px;top:50%;width:2.5px;height:14px;background:var(--ink);border-radius:2px;transform:translateY(-50%);transition:transform .25s ease}
+.faq details[open] summary::before{transform:translateY(-50%) rotate(90deg)}
+.faq .ans{padding:0 50px 24px 0;color:var(--mute);font-size:16.5px;animation:panein .35s ease both}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -490,11 +515,31 @@ footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
     <p class="eyebrow rv">Suurpuhastus 125&ndash;450 &euro;</p>
     <h2 class="rv">Enne kolimist või pärast seda</h2>
     <p class="lede rv d1">Põhjalik puhastus detailideni, kaasa arvatud kohad, kuhu tavakoristusel ei jõua.</p>
-    <ul class="incl">
-      <li class="rv">Köök põhjalikult &mdash; külmik, ahi ja mikrolaineahi ka seestpoolt</li>
-      <li class="rv d1">Vannituba ja WC &mdash; sealhulgas vuugid ja probleemsed kohad</li>
-      <li class="rv d2">Tolm ja mustus harva kasutatavatest ning raskesti ligipääsetavatest kohtadest</li>
-    </ul>
+    <div class="tabs rv d1">
+      <div class="tabnav" role="tablist">
+        <button type="button" role="tab" data-tab="0" aria-selected="true">Köök</button>
+        <button type="button" role="tab" data-tab="1" aria-selected="false">Vannituba ja WC</button>
+        <button type="button" role="tab" data-tab="2" aria-selected="false">Ülejäänud kodu</button>
+      </div>
+      <div class="tabpane" data-pane="0" data-on="1">
+        <div class="titem"><i></i>Külmik, ka seestpoolt</div>
+        <div class="titem"><i></i>Ahi, ka seestpoolt</div>
+        <div class="titem"><i></i>Mikrolaineahi, ka seestpoolt</div>
+        <div class="titem"><i></i>Köök tervikuna põhjalikult läbi</div>
+      </div>
+      <div class="tabpane" data-pane="1">
+        <div class="titem"><i></i>Vuugid</div>
+        <div class="titem"><i></i>Probleemsed kohad, mis tavakoristusel jäävad</div>
+        <div class="titem"><i></i>Vannituba ja WC põhjalikult</div>
+        <div class="titem"><i></i>Vajadusel tugevamad puhastusvahendid</div>
+      </div>
+      <div class="tabpane" data-pane="2">
+        <div class="titem"><i></i>Harva kasutatavad kohad</div>
+        <div class="titem"><i></i>Raskesti ligipääsetavad kohad</div>
+        <div class="titem"><i></i>Tolm ja mustus, mis igapäevaselt silma ei jää</div>
+        <div class="titem"><i></i>Kui midagi vajab eraldi tähelepanu, öelge</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -557,6 +602,35 @@ footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
     <div class="sent" id="sentBox">
       <h3>Päring saadetud</h3>
       <p>Aitäh. Võtame ühendust ühe tööpäeva jooksul. Kiire asja korral helistage +372 5811 7502.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow rv">Korduma kippuvad küsimused</p>
+    <h2 class="rv">Mida inimesed küsivad</h2>
+    <div class="faq rv d1">
+      <details>
+        <summary>Kui palju koristus maksab?</summary>
+        <p class="ans">Tavakoristus 75&ndash;250 &euro;, suurpuhastus 125&ndash;450 &euro;, akende pesemine 50&ndash;100 &euro;. Täpne summa sõltub kodu suurusest ja seisukorrast. Kalkulaator lehe ülaosas annab hinnangu.</p>
+      </details>
+      <details>
+        <summary>Mis vahe on tavakoristusel ja suurpuhastusel?</summary>
+        <p class="ans">Tavakoristus on regulaarne töö, mis hoiab kodu värske ja takistab mustuse kogunemist. Suurpuhastus on põhjalikum: köök, vannituba ja raskesti ligipääsetavad kohad käiakse detailideni läbi. Suurpuhastus sobib hästi enne kolimist või pärast seda.</p>
+      </details>
+      <details>
+        <summary>Kas te käite ka väljaspool Tallinna?</summary>
+        <p class="ans">Tallinnas ja lähiümbruses käime tavahinnaga. Väljaspool Harjumaad lepime hinna eraldi kokku &mdash; küsige julgelt.</p>
+      </details>
+      <details>
+        <summary>Kas te töötate kindla nimekirja järgi?</summary>
+        <p class="ans">Ei. Jäik loetelu jätab alati midagi vahele. Me vaatame, mis teie kodus tegelikult tähelepanu vajab, ja tegeleme sellega. Loeb lõpptulemus, mitte tehtud punktide arv.</p>
+      </details>
+      <details>
+        <summary>Kuidas pakkumist küsida?</summary>
+        <p class="ans">Täitke hinnapäringu vorm või helistage +372 5811 7502. Mida rohkem te kodu kohta kirjutate, seda täpsem on vastus.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -821,6 +895,26 @@ footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
     ba.addEventListener('pointerup',function(){drag=false});
     ba.addEventListener('pointercancel',function(){drag=false});
   }
+
+  /* ---------- Ruumide vahekaardid ---------- */
+  document.querySelectorAll('.tabnav button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var box = b.closest('.tabs');
+      box.querySelectorAll('.tabnav button').forEach(function(x){ x.setAttribute('aria-selected','false'); });
+      b.setAttribute('aria-selected','true');
+      box.querySelectorAll('.tabpane').forEach(function(p){ p.removeAttribute('data-on'); });
+      var t = box.querySelector('.tabpane[data-pane="' + b.dataset.tab + '"]');
+      if(t) t.setAttribute('data-on','1');
+    });
+  });
+
+  /* ---------- KKK: korraga ainult yks lahti ---------- */
+  document.querySelectorAll('.faq details').forEach(function(d){
+    d.addEventListener('toggle', function(){
+      if(!d.open) return;
+      document.querySelectorAll('.faq details').forEach(function(o){ if(o!==d) o.open=false; });
+    });
+  });
   document.getElementById('quoteForm').addEventListener('submit', function(e){
     e.preventDefault();
     var n=document.getElementById('nimi'), k=document.getElementById('kontakt');
