@@ -260,12 +260,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
 
 /* --- Pühitav mustus hero visuaalil --- */
 #grime{position:absolute;inset:0;z-index:3;border-radius:34px;cursor:grab;touch-action:none}
-.wipehint{position:absolute;z-index:6;bottom:13px;left:0;right:0;text-align:center;font-size:12.5px;font-weight:600;color:var(--mute);pointer-events:none}
+.wipehint{position:absolute;z-index:6;bottom:14px;left:50%;transform:translateX(-50%);background:rgba(44,51,39,.82);color:var(--sand);font-size:12.5px;font-weight:600;padding:7px 15px;border-radius:100px;pointer-events:none;white-space:nowrap}
 
 /* --- Mullid --- */
 .bub{position:absolute;bottom:-50px;z-index:2;border-radius:50%;pointer-events:none;
-  background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.95),rgba(255,255,255,.2) 55%,rgba(255,255,255,0) 72%);
-  border:1px solid rgba(255,255,255,.6);animation:bubrise linear infinite}
+  background:radial-gradient(circle at 33% 27%,rgba(255,255,255,.92),rgba(178,199,154,.38) 58%,rgba(178,199,154,.05) 76%);
+  border:1px solid rgba(104,132,90,.45);box-shadow:inset -2px -3px 7px rgba(104,132,90,.2);animation:bubrise linear infinite}
 @keyframes bubrise{0%{transform:translate(0,0);opacity:0}12%{opacity:.9}88%{opacity:.6}100%{transform:translate(var(--dx,18px),-460px);opacity:0}}
 
 /* --- Pihustus --- */
@@ -785,16 +785,24 @@ footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
     }
     paintGrime();
     addEventListener('resize', function(){ gx.globalCompositeOperation='source-over'; paintGrime(); });
-    var RR = Math.max(70, host.offsetWidth/7);
+    var RR = Math.max(52, host.offsetWidth/11);
     gc.addEventListener('pointermove', function(ev){
       var r=gc.getBoundingClientRect();
       wipe(ev.clientX-r.left, ev.clientY-r.top, RR);
     });
-    var t=0, W=host.offsetWidth, H=host.offsetHeight;
-    var auto=setInterval(function(){
-      t+=0.04; if(t>=1){ clearInterval(auto); return; }
-      wipe(W*(0.1+t*0.8), H*(0.5+Math.sin(t*5)*0.2), RR*1.05);
-    },16);
+    function teaser(){
+      var t=0, W=host.offsetWidth, H=host.offsetHeight;
+      var auto=setInterval(function(){
+        t+=0.028; if(t>=1){ clearInterval(auto); return; }
+        wipe(W*(0.2+t*0.3), H*(0.44+Math.sin(t*3.2)*0.1), RR);
+      },16);
+    }
+    if('IntersectionObserver' in window){
+      var vio=new IntersectionObserver(function(es){
+        if(es[0].isIntersecting){ gx.globalCompositeOperation='source-over'; paintGrime(); setTimeout(teaser,420); vio.disconnect(); }
+      },{threshold:.3});
+      vio.observe(host);
+    } else { teaser(); }
   }
 
   /* ---------- Enne / pärast liugur ---------- */
